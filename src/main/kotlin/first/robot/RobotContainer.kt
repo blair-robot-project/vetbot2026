@@ -1,5 +1,8 @@
 package first.robot
 
+import first.robot.subsystems.elevator.ElevatorIOSim
+import first.robot.subsystems.elevator.ElevatorSubsystem
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the [Robot]
@@ -8,6 +11,5 @@ package first.robot
  */
 class RobotContainer {
     // The container for the robot. Contains subsystems, OI devices, and commands.
-    init {
-    }
+    val elevator: ElevatorSubsystem = ElevatorSubsystem(ElevatorIOSim())
 }
