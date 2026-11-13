@@ -1,5 +1,7 @@
 package frc.robot
 
+import edu.wpi.first.wpilibj.RobotBase
+
 /*
  * The Constants file provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This file should not be used for any other purpose.
@@ -9,9 +11,24 @@ package frc.robot
 
 object Constants
 {
-    object OperatorConstants
-    {
-        const val DRIVER_CONTROLLER_PORT = 0
+    // --- OPERATIONAL MODES ---
+    enum class Mode {
+        REAL,
+        SIM,
+        REPLAY
+    }
+
+    val CURRENT_MODE: Mode = if (RobotBase.isReal()) Mode.REAL else Mode.SIM
+
+    object SwerveConstants {
+        val TOP_LEFT_TURNING_MOTOR_ID = 0
+        val TOP_RIGHT_TURNING_MOTOR_ID = 0
+        val BOTTOM_LEFT_TURNING_MOTOR_ID = 0
+        val BOTTOM_RIGHT_TURNING_MOTOR_ID = 0
+        val TOP_LEFT_DRIVING_MOTOR_ID = 0
+        val TOP_RIGHT_DRIVING_MOTOR_ID = 0
+        val BOTTOM_LEFT_DRIVING_MOTOR_ID = 0
+        val BOTTOM_RIGHT_DRIVING_MOTOR_ID = 0
     }
 }
 

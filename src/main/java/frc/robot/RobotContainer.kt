@@ -6,6 +6,8 @@ import frc.robot.Constants.OperatorConstants
 import frc.robot.commands.Autos
 import frc.robot.commands.ExampleCommand
 import frc.robot.subsystems.ExampleSubsystem
+import frc.robot.subsystems.swerve.ModuleIOHardware
+import frc.robot.subsystems.swerve.SwerveSubsystem
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,6 +24,13 @@ object RobotContainer
 {
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private val driverController = CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT)
+
+    /*val swerve: SwerveSubsystem =
+        SwerveSubsystem(
+            when(Constants.CURRENT_MODE) {
+                Constants.Mode.REAL -> ModuleIOHardware(Constants.SwerveConstants.TOP_LEFT_TURNING_MOTOR_ID, Constants.SwerveConstants.TOP_LEFT_DRIVING_MOTOR_ID)
+            }
+        )*/
         
     init
     {
