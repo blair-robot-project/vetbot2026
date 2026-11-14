@@ -1,3 +1,5 @@
+package first.robot.subsystems.elevator
+
 import org.littletonrobotics.junction.AutoLog
 
 interface ElevatorIO {

@@ -1,6 +1,5 @@
 package first.robot.subsystems.elevator
 
-import ElevatorIO
 import org.littletonrobotics.junction.Logger
 import org.wpilib.command3.Command
 import org.wpilib.command3.Mechanism
@@ -25,5 +24,5 @@ class ElevatorSubsystem(
         run {
             elevatorTargetPosition = m
             io.setPosition(m)
-        } as Command
+        }.named("Move Elevator")
 }

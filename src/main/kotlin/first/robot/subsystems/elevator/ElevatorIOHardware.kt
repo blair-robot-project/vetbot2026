@@ -1,6 +1,5 @@
 package first.robot.subsystems.elevator
 
-import ElevatorIO
 import com.ctre.phoenix6.BaseStatusSignal
 import com.ctre.phoenix6.CANBus
 import com.ctre.phoenix6.configs.Slot0Configs
@@ -92,10 +91,10 @@ open class ElevatorIOHardware : ElevatorIO {
     companion object {
         val talonSlot0Configs =
             Slot0Configs().apply {
-                kP = ElevatorConstants.kP
-                kI = ElevatorConstants.kI
-                kD = ElevatorConstants.kD
-                kG = ElevatorConstants.kG
+                kP = ElevatorConstants.KP
+                kI = ElevatorConstants.KI
+                kD = ElevatorConstants.KD
+                kG = ElevatorConstants.KG
             }
         val leftMotorConfig =
             TalonFXConfiguration().apply {

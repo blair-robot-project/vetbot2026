@@ -22,10 +22,10 @@ object Constants {
         const val RIGHT_ID = 7
 
         // --- PID VALUES ---
-        const val kP: Double = 0.0
-        const val kI: Double = 0.0
-        const val kD: Double = 0.0
-        const val kG: Double = 0.0
+        const val KP: Double = 0.0
+        const val KI: Double = 0.0
+        const val KD: Double = 0.0
+        const val KG: Double = 0.0
 
         // --- TALON SETTINGS ---
         const val TALON_STATOR_LIMIT: Double = 60.0
