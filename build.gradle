@@ -1,7 +1,8 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.3.0'
-    id "org.wpilib.GradleRIO" version "2027.0.0-alpha-6"
+    id "org.wpilib.GradleRIO" version "2027.0.0-alpha-5"
     id "com.gradleup.shadow" version "9.3.0"
+    id "org.jetbrains.kotlin.kapt" version "2.1.20"
     id 'org.jlleitschuh.gradle.ktlint' version '14.2.0'
 }
 
@@ -39,7 +40,7 @@ deploy {
                     files = project.fileTree('src/main/deploy')
                     directory = '/home/systemcore/deploy'
                     deleteOldFiles = false // Change to true to delete files on systemcore that no
-                                           // longer exist in deploy directory of this project
+                    // longer exist in deploy directory of this project
                 }
             }
         }
@@ -80,6 +81,10 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    def akitJson = new groovy.json.JsonSlurper().parseText(new File(projectDir.getAbsolutePath() + "/vendordeps/AdvantageKit.json").text)
+    annotationProcessor "org.littletonrobotics.akit:akit-autolog:$akitJson.version"
+    kapt "org.littletonrobotics.akit:akit-autolog:$akitJson.version"
 }
 
 test {
@@ -124,4 +129,3 @@ kotlin {
     sourceSets.main.kotlin.srcDirs += 'src/main/java'
     sourceSets.test.kotlin.srcDirs += 'src/test/java'
 }
-
