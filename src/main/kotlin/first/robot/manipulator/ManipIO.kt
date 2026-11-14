@@ -17,7 +17,6 @@ interface ManipIO {
         @JvmField var turnMotorVelocity = 0.0
 
         @JvmField var turnMotorAngle = Rotation2d()
-
     }
 
     fun updateInputs(inputs: ManipIOInputs) {}
@@ -26,8 +25,7 @@ interface ManipIO {
 
     fun setTurnVoltage(voltage: Double) {}
 
-    fun setTurnVelocity(radsPerSecond: Double){}
+    fun setTurnVelocity(radsPerSecond: Double) {}
 
-    fun setRollVelocity(radsPerSecond: Double){}
-
+    fun setRollVelocity(radsPerSecond: Double) {}
 }

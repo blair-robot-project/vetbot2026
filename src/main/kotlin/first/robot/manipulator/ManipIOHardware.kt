@@ -1,6 +1,5 @@
-package frc.team449.subsystems.manip
+package first.robot.manipulator
 
-import first.robot.manipulator.ManipIO
 import com.ctre.phoenix6.BaseStatusSignal
 import com.ctre.phoenix6.CANBus
 import com.ctre.phoenix6.configs.Slot0Configs
@@ -13,7 +12,6 @@ import org.wpilib.math.geometry.Rotation2d
 import org.wpilib.units.Units
 
 open class ManipIOHardware : ManipIO {
-
     val rollMotor = TalonFX(ManipConstants.ROLL_ID, CANBus())
     val turnMotor = TalonFX(ManipConstants.TURN_ID, CANBus())
 
@@ -68,32 +66,32 @@ open class ManipIOHardware : ManipIO {
 
     override fun setTurnVelocity(radsPerSecond: Double) {
         turnMotor.setControl(
-            turnVelocityRequest.withVelocity(radsPerSecond / (2 * Math.PI))
+            turnVelocityRequest.withVelocity(radsPerSecond / (2 * Math.PI)),
         )
     }
 
     override fun setRollVelocity(radsPerSecond: Double) {
         rollMotor.setControl(
-            rollVelocityRequest.withVelocity(radsPerSecond / (2 * Math.PI))
+            rollVelocityRequest.withVelocity(radsPerSecond / (2 * Math.PI)),
         )
     }
 
     companion object {
         val rollSlot0Configs =
             Slot0Configs().apply {
-                kP = ManipConstants.ROLL_kP
-                kI = ManipConstants.ROLL_kI
-                kD = ManipConstants.ROLL_kD
-                kS = ManipConstants.ROLL_kS
-                kV = ManipConstants.ROLL_kV
+                kP = ManipConstants.ROLL_KP
+                kI = ManipConstants.ROLL_KI
+                kD = ManipConstants.ROLL_KD
+                kS = ManipConstants.ROLL_KS
+                kV = ManipConstants.ROLL_KV
             }
         val turnSlot0Configs =
             Slot0Configs().apply {
-                kP = ManipConstants.TURN_kP
-                kI = ManipConstants.TURN_kI
-                kD = ManipConstants.TURN_kD
-                kS = ManipConstants.TURN_kS
-                kV = ManipConstants.TURN_kV
+                kP = ManipConstants.TURN_KP
+                kI = ManipConstants.TURN_KI
+                kD = ManipConstants.TURN_KD
+                kS = ManipConstants.TURN_KS
+                kV = ManipConstants.TURN_KV
             }
         val rollMotorConfig =
             TalonFXConfiguration().apply {

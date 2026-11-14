@@ -25,17 +25,17 @@ object Constants {
         const val TURN_STATOR_LIMIT = 60.0
 
         // --- VELOCITY GAINS (Slot0) ---
-        const val ROLL_kP = 0.1
-        const val ROLL_kI = 0.0
-        const val ROLL_kD = 0.0
-        const val ROLL_kS = 0.0
-        const val ROLL_kV = 0.12
+        const val ROLL_KP = 0.1
+        const val ROLL_KI = 0.0
+        const val ROLL_KD = 0.0
+        const val ROLL_KS = 0.0
+        const val ROLL_KV = 0.12
 
-        const val TURN_kP = 0.1
-        const val TURN_kI = 0.0
-        const val TURN_kD = 0.0
-        const val TURN_kS = 0.0
-        const val TURN_kV = 0.12
+        const val TURN_KP = 0.1
+        const val TURN_KI = 0.0
+        const val TURN_KD = 0.0
+        const val TURN_KS = 0.0
+        const val TURN_KV = 0.12
 
         // --- PHYSICAL SPECS & GEARING (motor:mechanism, >1 is a reduction) ---
         const val ROLL_GEARING = 1.0
@@ -46,9 +46,9 @@ object Constants {
         const val ARM_LENGTH_METERS = 0.3
         const val MIN_ANGLE_RADS = 0.0
         const val MAX_ANGLE_RADS = Math.PI / 2
-        const val TURN_kP_controller = 0.0
-        const val TURN_kI_controller = 0.0
-        const val TURN_kD_controller = 0.0
+        const val TURN_KP_CONTROLLER = 0.0
+        const val TURN_KI_CONTROLLER = 0.0
+        const val TURN_KD_CONTROLLER = 0.0
         const val TURN_GEARING = 0.1
     }
 }

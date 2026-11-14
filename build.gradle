@@ -1,8 +1,12 @@
+import groovy.json.JsonSlurper
+
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.3.0'
     id "org.wpilib.GradleRIO" version "2027.0.0-alpha-6"
     id "com.gradleup.shadow" version "9.3.0"
     id 'org.jlleitschuh.gradle.ktlint' version '14.2.0'
+    id "org.jetbrains.kotlin.kapt" version "2.1.0"
+
 }
 
 java {
@@ -39,7 +43,7 @@ deploy {
                     files = project.fileTree('src/main/deploy')
                     directory = '/home/systemcore/deploy'
                     deleteOldFiles = false // Change to true to delete files on systemcore that no
-                                           // longer exist in deploy directory of this project
+                    // longer exist in deploy directory of this project
                 }
             }
         }
@@ -80,6 +84,10 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // advantage kit
+    def akitJson = new JsonSlurper().parseText(new File(projectDir.getAbsolutePath() + "/vendordeps/AdvantageKit.json").text)
+    kapt "org.littletonrobotics.akit:akit-autolog:$akitJson.version"
 }
 
 test {

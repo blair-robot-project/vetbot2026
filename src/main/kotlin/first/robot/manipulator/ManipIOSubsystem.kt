@@ -1,22 +1,21 @@
-package frc.team449.subsystems.manip
+package first.robot.manipulator
 
 import frc.team449.Constants.ManipConstants
 import org.littletonrobotics.junction.Logger
 import org.wpilib.command3.Command
-import org.wpilib.math.controller.PIDController
-import first.robot.manipulator.ManipIO
 import org.wpilib.command3.Mechanism
+import org.wpilib.math.controller.PIDController
 
-class ManipSubsystem(
-    private val io: ManipIO
+class ManipIOSubsystem(
+    private val io: ManipIO,
 ) : Mechanism() {
     private val inputs: ManipIOInputsAutoLogged = ManipIOInputsAutoLogged()
 
     private val turnController =
         PIDController(
-            ManipConstants.TURN_kP_controller,
-            ManipConstants.TURN_kI_controller,
-            ManipConstants.TURN_kD_controller,
+            ManipConstants.TURN_KP_CONTROLLER,
+            ManipConstants.TURN_KI_CONTROLLER,
+            ManipConstants.TURN_KD_CONTROLLER,
         )
 
     fun periodic() {
