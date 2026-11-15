@@ -1,4 +1,3 @@
 package first.robot.subsystems.intake
 
-class IntakeIOSim: IntakeIOHardware() {
-}
+class IntakeIOSim : IntakeIOHardware()
