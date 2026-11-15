@@ -1,18 +1,20 @@
 package first.robot.subsystems.intake
 import com.ctre.phoenix6.BaseStatusSignal
 import com.ctre.phoenix6.CANBus
+import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.controls.VoltageOut
 import com.ctre.phoenix6.hardware.ParentDevice
 import com.ctre.phoenix6.hardware.TalonFX
+import first.robot.subsystems.intake.PhoenixUtil.tryUntilOk
 import org.wpilib.units.Units
 import org.wpilib.units.measure.Angle
 
 open class IntakeIOHardware : IntakeIO {
-    val rightPivot = TalonFX(1, CANBus())
-    val leftPivot = TalonFX(2, CANBus())
-    val topRoller = TalonFX(3, CANBus())
-    val bottomRoller = TalonFX(4, CANBus())
+    val rightPivot = TalonFX(IntakeConstants.RIGHT_PIVOT_ID, CANBus())
+    val leftPivot = TalonFX(IntakeConstants.LEFT_PIVOT_ID, CANBus())
+    val topRoller = TalonFX(IntakeConstants.TOP_ROLLER_ID, CANBus())
+    val bottomRoller = TalonFX(IntakeConstants.BOTTOM_ROLLER_ID, CANBus())
 
     private val pivotVoltageRequest = VoltageOut(0.0)
     private val pivotPositionRequest = PositionVoltage(0.0)
@@ -109,7 +111,10 @@ open class IntakeIOHardware : IntakeIO {
             )
 
     init {
-        // tryUntilOk(5) {rightPivot.configurator.apply( whatever the config is)} x4
+        tryUntilOk(5) {rightPivot.configurator.apply(rightPivotConfig)}
+        tryUntilOk(5) {leftPivot.configurator.apply(leftPivotConfig)}
+        tryUntilOk(5) {topRoller.configurator.apply(topRollerConfig)}
+        tryUntilOk(5) {bottomRoller.configurator.apply(bottomRollerConfig)}
         BaseStatusSignal.setUpdateFrequencyForAll(50.0, *intakeSignals)
         ParentDevice.optimizeBusUtilizationForAll(rightPivot, leftPivot, topRoller, bottomRoller)
     }
@@ -160,5 +165,63 @@ open class IntakeIOHardware : IntakeIO {
     override fun setRollerVoltage(volts: Double) {
         topRoller.setControl(rollerVoltageRequest.withOutput(volts))
         bottomRoller.setControl(rollerVoltageRequest.withOutput(volts))
+    }
+
+    companion object {
+        val rightPivotConfig = TalonFXConfiguration().apply{
+            CurrentLimits.apply{
+                SupplyCurrentLimit = IntakeConstants.PIVOT_SUPPLY_LIMIT
+                StatorCurrentLimit = IntakeConstants.PIVOT_STATOR_LIMIT
+            }
+
+            MotorOutput.apply{
+                NeutralMode = IntakeConstants.RIGHT_PIVOT_NEUTRAL_MODE
+                Inverted = IntakeConstants.RIGHT_PIVOT_INVERSION
+            }
+
+            Feedback.SensorToMechanismRatio = IntakeConstants.PIVOT_SENSOR_MECH_RATIO
+        }
+
+        val leftPivotConfig = TalonFXConfiguration().apply{
+            CurrentLimits.apply{
+                SupplyCurrentLimit = IntakeConstants.PIVOT_SUPPLY_LIMIT
+                StatorCurrentLimit = IntakeConstants.PIVOT_STATOR_LIMIT
+            }
+
+            MotorOutput.apply{
+                NeutralMode = IntakeConstants.LEFT_PIVOT_NEUTRAL_MODE
+                Inverted = IntakeConstants.LEFT_PIVOT_INVERSION
+            }
+
+            Feedback.SensorToMechanismRatio = IntakeConstants.PIVOT_SENSOR_MECH_RATIO
+        }
+
+        val topRollerConfig = TalonFXConfiguration().apply{
+            CurrentLimits.apply{
+                SupplyCurrentLimit = IntakeConstants.ROLLER_SUPPLY_LIMIT
+                StatorCurrentLimit = IntakeConstants.ROLLER_SUPPLY_LIMIT
+            }
+
+            MotorOutput.apply{
+                NeutralMode = IntakeConstants.TOP_ROLLER_NEUTRAL_MODE
+                Inverted = IntakeConstants.TOP_ROLLER_INVERSION
+            }
+
+            Feedback.SensorToMechanismRatio = IntakeConstants.ROLLER_SENSOR_MECH_RATIO
+        }
+
+        val bottomRollerConfig = TalonFXConfiguration().apply{
+            CurrentLimits.apply{
+                SupplyCurrentLimit = IntakeConstants.ROLLER_SUPPLY_LIMIT
+                StatorCurrentLimit = IntakeConstants.ROLLER_STATOR_LIMIT
+            }
+
+            MotorOutput.apply{
+                NeutralMode = IntakeConstants.BOTTOM_ROLLER_NEUTRAL_MODE
+                Inverted = IntakeConstants.BOTTOM_ROLLER_INVERSION
+            }
+
+            Feedback.SensorToMechanismRatio = IntakeConstants.ROLLER_SENSOR_MECH_RATIO
+        }
     }
 }
