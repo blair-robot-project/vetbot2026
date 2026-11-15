@@ -1,17 +1,7 @@
 package frc.robot
 
 import com.ctre.phoenix6.SignalLogger
-import edu.wpi.first.hal.FRCNetComm
-import edu.wpi.first.hal.HAL
-import edu.wpi.first.math.MathUtil
-import edu.wpi.first.math.geometry.Pose3d
-import edu.wpi.first.math.geometry.Rotation3d
-import edu.wpi.first.wpilibj.DriverStation
-import edu.wpi.first.wpilibj.PowerDistribution
-import edu.wpi.first.wpilibj.RobotController
-import edu.wpi.first.wpilibj2.command.CommandScheduler
 import org.littletonrobotics.junction.LogFileUtil
-import org.littletonrobotics.junction.LoggedPowerDistribution
 import org.littletonrobotics.junction.LoggedRobot
 import org.littletonrobotics.junction.Logger
 import org.littletonrobotics.junction.networktables.NT4Publisher
@@ -23,9 +13,6 @@ class Robot : LoggedRobot() {
 
     init {
         println("Initializing Robot!")
-
-        HAL.report(FRCNetComm.tResourceType.kResourceType_Language, FRCNetComm.tInstances.kLanguage_Kotlin)
-        DriverStation.silenceJoystickConnectionWarning(true)
 
         when (Constants.CURRENT_MODE) {
             Constants.Mode.REAL -> {
@@ -45,38 +32,22 @@ class Robot : LoggedRobot() {
             }
         }
 
-        // TODO: correct PDH CAN ID
-        LoggedPowerDistribution.getInstance(0, PowerDistribution.ModuleType.kRev)
-
         SignalLogger.enableAutoLogging(false)
         Logger.start()
     }
 
-    override fun robotInit() {
-        RobotController.setBrownoutVoltage(6.3)
-
+    fun robotInit() {
         robotContainer.bindings.setDefaultCommands()
         robotContainer.bindings.bindControls()
     }
 
     override fun robotPeriodic() {
-        CommandScheduler.getInstance().run()
-
         Logger.recordOutput("Robot/Mode", Constants.CURRENT_MODE.name)
-        Logger.recordOutput("MatchTime", DriverStation.getMatchTime())
 
         logComponentPoses()
     }
 
-    override fun autonomousInit() {
-        CommandScheduler.getInstance().schedule(robotContainer.autonomousCommand)
-    }
-
     override fun autonomousPeriodic() {}
-
-    override fun teleopInit() {
-        robotContainer.autonomousCommand.cancel()
-    }
 
     private fun logComponentPoses() {
     }

@@ -1,16 +1,16 @@
 package frc.robot.subsystems.swerve
 
-import edu.wpi.first.math.kinematics.ChassisSpeeds
-import edu.wpi.first.wpilibj2.command.Command
-import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.littletonrobotics.junction.Logger
+import org.wpilib.command3.Command
+import org.wpilib.command3.Mechanism
+import org.wpilib.math.kinematics.ChassisVelocities
 
 class SwerveSubsystem(
     private val io: DriveIO
-) : SubsystemBase() {
+) : Mechanism {
     private val inputs: DriveIOInputsAutoLogged = DriveIOInputsAutoLogged()
 
-    override fun periodic() {
+    fun periodic() {
         io.updateInputs(inputs)
 
         Logger.processInputs("Swerve", inputs)
@@ -20,25 +20,24 @@ class SwerveSubsystem(
         io.setState(xVelocity, yVelocity,angularVelocity)
     }
 
-    fun setState(speeds: ChassisSpeeds) {
-        io.setState(speeds.vxMetersPerSecond,speeds.vyMetersPerSecond,speeds.omegaRadiansPerSecond)
+    fun setState(speeds: ChassisVelocities) {
+        io.setState(speeds.vx,speeds.vy,speeds.omega)
     }
 
-    // update to v3 command later
     fun rotate(speed: Double): Command =
-        runOnce {
+        run {
             io.setRotationSpeed(speed)
-        }.withName("Rotate")
+        }.named("Rotate")
 
     fun moveUp(speed: Double): Command =
-        runOnce {
+        run {
             io.setVerticalVelocity(speed)
-        }.withName("Move up")
+        }.named("Move up")
 
     fun moveRight(speed: Double): Command =
-        runOnce {
+        run {
             io.setHorizontalVelocity(speed)
-        }.withName("Move right")
+        }.named("Move right")
 
     fun stopSwerve() {
         io.setState(0.0, 0.0, 0.0)

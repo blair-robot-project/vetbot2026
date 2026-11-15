@@ -1,18 +1,13 @@
 package frc.robot.subsystems.swerve
 
-import edu.wpi.first.math.system.plant.DCMotor
-import edu.wpi.first.math.system.plant.LinearSystemId
-import edu.wpi.first.wpilibj.simulation.DCMotorSim
+import org.wpilib.math.system.DCMotor
+import org.wpilib.simulation.DCMotorSim
 
 class DriveIOSim : DriveIOHardware() {
-    val motorSims: List<DCMotorSim> = (0..7).map {i ->
+    val motorSims: List<DCMotorSim> = (0..7).map { i ->
         DCMotorSim(
-            LinearSystemId.createDCMotorSystem(
-                DCMotor.getKrakenX60(1),
-                SwerveConstants.MOTOR_MOI,
-                SwerveConstants.MOTOR_GEARING,
-            ),
-            DCMotor.getKrakenX60(1),
+            null,
+            DCMotor.getKrakenX60(1)
         )
     }
 

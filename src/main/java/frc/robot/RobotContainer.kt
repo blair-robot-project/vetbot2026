@@ -1,19 +1,17 @@
 package frc.robot
 
-import edu.wpi.first.wpilibj2.command.Command
-import edu.wpi.first.wpilibj2.command.PrintCommand
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController
 import frc.robot.subsystems.swerve.DriveIO
 import frc.robot.subsystems.swerve.DriveIOHardware
 import frc.robot.subsystems.swerve.DriveIOSim
 import frc.robot.subsystems.swerve.SwerveSubsystem
 import frc.robot.Constants.Mode
 import frc.robot.subsystems.RobotActions
+import org.wpilib.command3.Command
+import org.wpilib.command3.button.CommandXboxController
 
 object RobotContainer {
     val driveController: CommandXboxController = CommandXboxController(0)
     val operatorController: CommandXboxController = CommandXboxController(1)
-    var autonomousCommand: Command = PrintCommand("If you see this, you probably didn't run an auto.")
 
     val swerve: SwerveSubsystem =
         SwerveSubsystem(
