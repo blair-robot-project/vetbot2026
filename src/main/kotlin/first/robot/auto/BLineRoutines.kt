@@ -1,5 +1,8 @@
 package first.robot.auto
-import edu.wpi.first.math.controller.PIDController
+import com.ctre.phoenix6.swerve.SwerveRequest
+import org.wpilib.math.controller.PIDController
+//import java.util.logging.Logger
+
 
 class BLineRoutines (
     // pass in drive and robot actions
@@ -8,7 +11,7 @@ class BLineRoutines (
     private val rotationController = PIDController(0.0,0.0,0.0)
     private val crossTrackController = PIDController(0.0,0.0,0.0)
 
-    private val applySpeedsRequest = SwerveRequest.ApplyRobotSpeeds()
+    private val applySpeedsRequest = SwerveRequest.ApplyRobotVelocity()
 
     private val baseBuilder =
         FollowPath.Builder(
