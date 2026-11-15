@@ -8,4 +8,3 @@ object Main {
         RobotBase.startRobot { Robot() }
     }
 }
-

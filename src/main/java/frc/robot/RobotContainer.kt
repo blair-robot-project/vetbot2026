@@ -1,12 +1,11 @@
 package frc.robot
 
+import frc.robot.Constants.Mode
+import frc.robot.subsystems.RobotActions
 import frc.robot.subsystems.swerve.DriveIO
 import frc.robot.subsystems.swerve.DriveIOHardware
 import frc.robot.subsystems.swerve.DriveIOSim
 import frc.robot.subsystems.swerve.SwerveSubsystem
-import frc.robot.Constants.Mode
-import frc.robot.subsystems.RobotActions
-import org.wpilib.command3.Command
 import org.wpilib.command3.button.CommandXboxController
 
 object RobotContainer {

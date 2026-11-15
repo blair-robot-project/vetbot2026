@@ -5,21 +5,33 @@ import com.ctre.phoenix6.CANBus
 import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.controls.VelocityVoltage
 import com.ctre.phoenix6.hardware.TalonFX
+import frc.robot.subsystems.swerve.ModuleData.Companion.fromArray
 import org.wpilib.math.geometry.Translation2d
 import org.wpilib.math.kinematics.ChassisVelocities
 import org.wpilib.math.kinematics.SwerveDriveKinematics
 import org.wpilib.units.Units
 
 open class DriveIOHardware : DriveIO {
-    val motors: List<TalonFX> = SwerveConstants.MOTOR_IDS.map { i -> TalonFX(i, CANBus()) }
+    val turningMotors: List<TalonFX> = SwerveConstants.TURNING_MOTOR_IDS.map { i -> TalonFX(i, CANBus()) }
+    val drivingMotors: List<TalonFX> = SwerveConstants.DRIVING_MOTOR_IDS.map { i -> TalonFX(i, CANBus()) }
 
-    val motorsConnected = (0..7).map { i ->
-        BaseStatusSignal.isAllGood(
-            motors[i].motorVoltage,
-            motors[i].velocity,
-            motors[i].statorCurrent
-        )
-    }
+    val turningMotorsConnected =
+        turningMotors.map { i ->
+            BaseStatusSignal.isAllGood(
+                i.motorVoltage,
+                i.velocity,
+                i.statorCurrent,
+            )
+        }
+
+    val drivingMotorsConnected =
+        drivingMotors.map { i ->
+            BaseStatusSignal.isAllGood(
+                i.motorVoltage,
+                i.velocity,
+                i.statorCurrent,
+            )
+        }
 
     val length = SwerveConstants.ROBOT_LENGTH
     val width = SwerveConstants.ROBOT_WIDTH
@@ -29,9 +41,13 @@ open class DriveIOHardware : DriveIO {
     val backLeftLocation = Translation2d(width / 2, -length / 2)
     val backRightLocation = Translation2d(-width / 2, -length / 2)
 
-    val kinematics = SwerveDriveKinematics(
-        frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation
-    )
+    val kinematics =
+        SwerveDriveKinematics(
+            frontLeftLocation,
+            frontRightLocation,
+            backLeftLocation,
+            backRightLocation,
+        )
 
     val speeds = ChassisVelocities(0.0, 0.0, 0.0)
     val moduleStates = kinematics.toSwerveModuleVelocities(speeds)
@@ -40,16 +56,15 @@ open class DriveIOHardware : DriveIO {
     val positionRequest = PositionVoltage(0.0)
 
     override fun updateInputs(inputs: DriveIO.DriveIOInputs) {
-        for (i in 0..3) {
-            inputs.data[i].turningVoltage = motors[i * 2].motorVoltage.value.`in`(Units.Volts);
-            inputs.data[i].drivingVoltage = motors[i * 2 + 1].motorVoltage.value.`in`(Units.Volts);
-        }
+        inputs.topLeftData = fromArray(getModuleData(0))
+        inputs.topRightData = fromArray(getModuleData(1))
+        inputs.bottomLeftData = fromArray(getModuleData(2))
+        inputs.bottomRightData = fromArray(getModuleData(3))
     }
 
     override fun setVoltages(voltage: Double) {
-        for (i in 0..7) {
-            motors[i].setVoltage(voltage)
-        }
+        turningMotors.map { i -> i.setVoltage(voltage) }
+        drivingMotors.map { i -> i.setVoltage(voltage) }
     }
 
     override fun setRotationSpeed(velocity: Double) {
@@ -67,7 +82,11 @@ open class DriveIOHardware : DriveIO {
         calculate()
     }
 
-    override fun setState(horizVelocity: Double, vertVelocity: Double, rotVelocity: Double) {
+    override fun setState(
+        horizVelocity: Double,
+        vertVelocity: Double,
+        rotVelocity: Double,
+    ) {
         speeds.vx = horizVelocity
         speeds.vy = vertVelocity
         speeds.omega = rotVelocity
@@ -76,8 +95,22 @@ open class DriveIOHardware : DriveIO {
 
     fun calculate() {
         for (i in 0..3) {
-            motors[i * 2 + 1].setControl(velocityRequest.withVelocity(moduleStates[i].velocity * SwerveConstants.DRIVE_GEARING))
-            motors[i * 2].setControl(positionRequest.withPosition(moduleStates[i].angle.radians * SwerveConstants.TURN_GEARING))
+            turningMotors[i].setControl(positionRequest.withPosition(moduleStates[i].angle.radians * SwerveConstants.TURN_GEARING))
+            drivingMotors[i].setControl(velocityRequest.withVelocity(moduleStates[i].velocity * SwerveConstants.DRIVE_GEARING))
         }
+    }
+
+    fun getModuleData(index: Int): Array<Double> {
+        val turningMotor: TalonFX = turningMotors[index]
+        val driveMotor: TalonFX = drivingMotors[index]
+
+        return arrayOf(
+            turningMotor.motorVoltage.value.`in`(Units.Volts),
+            turningMotor.velocity.value.`in`(Units.RadiansPerSecond),
+            turningMotor.statorCurrent.value.`in`(Units.Amps),
+            driveMotor.motorVoltage.value.`in`(Units.Volts),
+            driveMotor.velocity.value.`in`(Units.RadiansPerSecond),
+            driveMotor.statorCurrent.value.`in`(Units.Amps),
+        )
     }
 }

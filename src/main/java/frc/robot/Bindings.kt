@@ -1,7 +1,7 @@
 package frc.robot
 
 class Bindings(
-    val robotContainer: RobotContainer
+    val robotContainer: RobotContainer,
 ) {
     val driver = robotContainer.driveController
     val actions = robotContainer.actions
