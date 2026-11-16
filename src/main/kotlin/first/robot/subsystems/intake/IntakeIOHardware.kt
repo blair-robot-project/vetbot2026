@@ -1,6 +1,7 @@
 package first.robot.subsystems.intake
 import com.ctre.phoenix6.BaseStatusSignal
 import com.ctre.phoenix6.CANBus
+import com.ctre.phoenix6.configs.Slot0Configs
 import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.controls.VoltageOut
@@ -180,6 +181,15 @@ open class IntakeIOHardware : IntakeIO {
             }
 
             Feedback.SensorToMechanismRatio = IntakeConstants.PIVOT_SENSOR_MECH_RATIO
+
+            Slot0 = Slot0Configs().apply{ //these values are from last yr, we need to update!!
+                kP = 100.0
+                kI = 0.0
+                kD = 0.1
+                kS = 0.2
+            }
+
+
         }
 
         val leftPivotConfig = TalonFXConfiguration().apply{
@@ -194,6 +204,13 @@ open class IntakeIOHardware : IntakeIO {
             }
 
             Feedback.SensorToMechanismRatio = IntakeConstants.PIVOT_SENSOR_MECH_RATIO
+
+            Slot0 = Slot0Configs().apply{ // also need to be updated
+                kP = 100.0
+                kI = 0.0
+                kD = 0.1
+                kS = 0.2
+            }
         }
 
         val topRollerConfig = TalonFXConfiguration().apply{
