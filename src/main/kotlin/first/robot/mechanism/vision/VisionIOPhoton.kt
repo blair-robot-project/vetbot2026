@@ -1,4 +1,4 @@
-package first.robot.subsystems.vision
+package first.robot.mechanism.vision
 
 import org.photonvision.PhotonCamera
 import org.wpilib.math.geometry.Transform3d

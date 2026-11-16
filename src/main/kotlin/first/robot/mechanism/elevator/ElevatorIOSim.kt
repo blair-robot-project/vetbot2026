@@ -1,4 +1,4 @@
-package first.robot.subsystems.elevator
+package first.robot.mechanism.elevator
 
 import first.robot.Constants
 import first.robot.Constants.ElevatorConstants

@@ -1,6 +1,6 @@
-package first.robot.manipulator
+package first.robot.mechanism.manipulator
 
-import frc.team449.Constants.ManipConstants
+import first.robot.Constants.ManipConstants
 import org.littletonrobotics.junction.Logger
 import org.wpilib.command3.Command
 import org.wpilib.command3.Mechanism

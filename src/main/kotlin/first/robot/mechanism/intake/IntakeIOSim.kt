@@ -1,3 +1,3 @@
-package first.robot.subsystems.intake
+package first.robot.mechanism.intake
 
 class IntakeIOSim : IntakeIOHardware()

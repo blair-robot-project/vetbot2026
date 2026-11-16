@@ -1,4 +1,4 @@
-package first.robot.subsystems.intake
+package first.robot.mechanism.intake
 
 class IntakeSubsystem(
     private val io: IntakeIO,

@@ -1,4 +1,4 @@
-package first.robot.manipulator
+package first.robot.mechanism.manipulator
 
 import org.littletonrobotics.junction.AutoLog
 import org.wpilib.math.geometry.Rotation2d

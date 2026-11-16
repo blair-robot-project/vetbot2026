@@ -1,7 +1,7 @@
 package first.robot
 
-import first.robot.subsystems.elevator.ElevatorIOSim
-import first.robot.subsystems.elevator.ElevatorSubsystem
+import first.robot.mechanism.elevator.ElevatorIOSim
+import first.robot.mechanism.elevator.ElevatorSubsystem
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a

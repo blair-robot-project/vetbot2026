@@ -1,4 +1,4 @@
-package first.robot.subsystems.elevator
+package first.robot.mechanism.elevator
 
 import com.ctre.phoenix6.BaseStatusSignal
 import com.ctre.phoenix6.CANBus

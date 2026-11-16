@@ -1,7 +1,7 @@
-package first.robot.manipulator
+package first.robot.mechanism.manipulator
 
-import frc.team449.Constants
-import frc.team449.Constants.ManipConstants
+import first.robot.Constants
+import first.robot.Constants.ManipConstants
 import org.wpilib.math.system.DCMotor
 import org.wpilib.math.system.Models.flywheelFromPhysicalConstants
 import org.wpilib.math.util.Units

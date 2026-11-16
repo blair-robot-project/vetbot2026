@@ -1,4 +1,4 @@
-package first.robot.subsystems.intake
+package first.robot.mechanism.intake
 import com.ctre.phoenix6.BaseStatusSignal
 import com.ctre.phoenix6.CANBus
 import com.ctre.phoenix6.controls.PositionVoltage

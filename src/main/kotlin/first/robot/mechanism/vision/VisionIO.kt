@@ -1,4 +1,4 @@
-package first.robot.subsystems.vision
+package first.robot.mechanism.vision
 
 import org.littletonrobotics.junction.AutoLog
 import org.wpilib.math.geometry.Pose3d

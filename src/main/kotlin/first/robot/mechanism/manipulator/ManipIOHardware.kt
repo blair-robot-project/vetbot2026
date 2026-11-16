@@ -1,4 +1,4 @@
-package first.robot.manipulator
+package first.robot.mechanism.manipulator
 
 import com.ctre.phoenix6.BaseStatusSignal
 import com.ctre.phoenix6.CANBus
@@ -7,7 +7,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.controls.VelocityVoltage
 import com.ctre.phoenix6.controls.VoltageOut
 import com.ctre.phoenix6.hardware.TalonFX
-import frc.team449.Constants.ManipConstants
+import first.robot.Constants.ManipConstants
 import org.wpilib.math.geometry.Rotation2d
 import org.wpilib.units.Units
 

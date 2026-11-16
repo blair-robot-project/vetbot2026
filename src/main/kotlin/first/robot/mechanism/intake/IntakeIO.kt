@@ -1,4 +1,4 @@
-package first.robot.subsystems.intake
+package first.robot.mechanism.intake
 
 import org.littletonrobotics.junction.AutoLog
 import org.wpilib.units.measure.Angle

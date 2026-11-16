@@ -1,4 +1,4 @@
-package first.robot.subsystems.elevator
+package first.robot.mechanism.elevator
 
 import org.littletonrobotics.junction.AutoLog
 
