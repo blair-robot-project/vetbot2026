@@ -112,10 +112,10 @@ open class IntakeIOHardware : IntakeIO {
             )
 
     init {
-        tryUntilOk(5) {rightPivot.configurator.apply(rightPivotConfig)}
-        tryUntilOk(5) {leftPivot.configurator.apply(leftPivotConfig)}
-        tryUntilOk(5) {topRoller.configurator.apply(topRollerConfig)}
-        tryUntilOk(5) {bottomRoller.configurator.apply(bottomRollerConfig)}
+        tryUntilOk(5) { rightPivot.configurator.apply(rightPivotConfig) }
+        tryUntilOk(5) { leftPivot.configurator.apply(leftPivotConfig) }
+        tryUntilOk(5) { topRoller.configurator.apply(topRollerConfig) }
+        tryUntilOk(5) { bottomRoller.configurator.apply(bottomRollerConfig) }
         BaseStatusSignal.setUpdateFrequencyForAll(50.0, *intakeSignals)
         ParentDevice.optimizeBusUtilizationForAll(rightPivot, leftPivot, topRoller, bottomRoller)
     }
@@ -169,76 +169,82 @@ open class IntakeIOHardware : IntakeIO {
     }
 
     companion object {
-        val rightPivotConfig = TalonFXConfiguration().apply{
-            CurrentLimits.apply{
-                SupplyCurrentLimit = IntakeConstants.PIVOT_SUPPLY_LIMIT
-                StatorCurrentLimit = IntakeConstants.PIVOT_STATOR_LIMIT
+        val rightPivotConfig =
+            TalonFXConfiguration().apply {
+                CurrentLimits.apply {
+                    SupplyCurrentLimit = IntakeConstants.PIVOT_SUPPLY_LIMIT
+                    StatorCurrentLimit = IntakeConstants.PIVOT_STATOR_LIMIT
+                }
+
+                MotorOutput.apply {
+                    NeutralMode = IntakeConstants.RIGHT_PIVOT_NEUTRAL_MODE
+                    Inverted = IntakeConstants.RIGHT_PIVOT_INVERSION
+                }
+
+                Feedback.SensorToMechanismRatio = IntakeConstants.PIVOT_SENSOR_MECH_RATIO
+
+                Slot0 =
+                    Slot0Configs().apply {
+                        // these values are from last yr, we need to update!!
+                        kP = 100.0
+                        kI = 0.0
+                        kD = 0.1
+                        kS = 0.2
+                    }
             }
 
-            MotorOutput.apply{
-                NeutralMode = IntakeConstants.RIGHT_PIVOT_NEUTRAL_MODE
-                Inverted = IntakeConstants.RIGHT_PIVOT_INVERSION
+        val leftPivotConfig =
+            TalonFXConfiguration().apply {
+                CurrentLimits.apply {
+                    SupplyCurrentLimit = IntakeConstants.PIVOT_SUPPLY_LIMIT
+                    StatorCurrentLimit = IntakeConstants.PIVOT_STATOR_LIMIT
+                }
+
+                MotorOutput.apply {
+                    NeutralMode = IntakeConstants.LEFT_PIVOT_NEUTRAL_MODE
+                    Inverted = IntakeConstants.LEFT_PIVOT_INVERSION
+                }
+
+                Feedback.SensorToMechanismRatio = IntakeConstants.PIVOT_SENSOR_MECH_RATIO
+
+                Slot0 =
+                    Slot0Configs().apply {
+                        // also need to be updated
+                        kP = 100.0
+                        kI = 0.0
+                        kD = 0.1
+                        kS = 0.2
+                    }
             }
 
-            Feedback.SensorToMechanismRatio = IntakeConstants.PIVOT_SENSOR_MECH_RATIO
+        val topRollerConfig =
+            TalonFXConfiguration().apply {
+                CurrentLimits.apply {
+                    SupplyCurrentLimit = IntakeConstants.ROLLER_SUPPLY_LIMIT
+                    StatorCurrentLimit = IntakeConstants.ROLLER_SUPPLY_LIMIT
+                }
 
-            Slot0 = Slot0Configs().apply{ //these values are from last yr, we need to update!!
-                kP = 100.0
-                kI = 0.0
-                kD = 0.1
-                kS = 0.2
+                MotorOutput.apply {
+                    NeutralMode = IntakeConstants.TOP_ROLLER_NEUTRAL_MODE
+                    Inverted = IntakeConstants.TOP_ROLLER_INVERSION
+                }
+
+                Feedback.SensorToMechanismRatio = IntakeConstants.ROLLER_SENSOR_MECH_RATIO
             }
 
+        val bottomRollerConfig =
+            TalonFXConfiguration().apply {
+                CurrentLimits.apply {
+                    SupplyCurrentLimit = IntakeConstants.ROLLER_SUPPLY_LIMIT
+                    StatorCurrentLimit = IntakeConstants.ROLLER_STATOR_LIMIT
+                }
 
-        }
+                MotorOutput.apply {
+                    NeutralMode = IntakeConstants.BOTTOM_ROLLER_NEUTRAL_MODE
+                    Inverted = IntakeConstants.BOTTOM_ROLLER_INVERSION
+                }
 
-        val leftPivotConfig = TalonFXConfiguration().apply{
-            CurrentLimits.apply{
-                SupplyCurrentLimit = IntakeConstants.PIVOT_SUPPLY_LIMIT
-                StatorCurrentLimit = IntakeConstants.PIVOT_STATOR_LIMIT
+                Feedback.SensorToMechanismRatio = IntakeConstants.ROLLER_SENSOR_MECH_RATIO
             }
-
-            MotorOutput.apply{
-                NeutralMode = IntakeConstants.LEFT_PIVOT_NEUTRAL_MODE
-                Inverted = IntakeConstants.LEFT_PIVOT_INVERSION
-            }
-
-            Feedback.SensorToMechanismRatio = IntakeConstants.PIVOT_SENSOR_MECH_RATIO
-
-            Slot0 = Slot0Configs().apply{ // also need to be updated
-                kP = 100.0
-                kI = 0.0
-                kD = 0.1
-                kS = 0.2
-            }
-        }
-
-        val topRollerConfig = TalonFXConfiguration().apply{
-            CurrentLimits.apply{
-                SupplyCurrentLimit = IntakeConstants.ROLLER_SUPPLY_LIMIT
-                StatorCurrentLimit = IntakeConstants.ROLLER_SUPPLY_LIMIT
-            }
-
-            MotorOutput.apply{
-                NeutralMode = IntakeConstants.TOP_ROLLER_NEUTRAL_MODE
-                Inverted = IntakeConstants.TOP_ROLLER_INVERSION
-            }
-
-            Feedback.SensorToMechanismRatio = IntakeConstants.ROLLER_SENSOR_MECH_RATIO
-        }
-
-        val bottomRollerConfig = TalonFXConfiguration().apply{
-            CurrentLimits.apply{
-                SupplyCurrentLimit = IntakeConstants.ROLLER_SUPPLY_LIMIT
-                StatorCurrentLimit = IntakeConstants.ROLLER_STATOR_LIMIT
-            }
-
-            MotorOutput.apply{
-                NeutralMode = IntakeConstants.BOTTOM_ROLLER_NEUTRAL_MODE
-                Inverted = IntakeConstants.BOTTOM_ROLLER_INVERSION
-            }
-
-            Feedback.SensorToMechanismRatio = IntakeConstants.ROLLER_SENSOR_MECH_RATIO
-        }
     }
 }
