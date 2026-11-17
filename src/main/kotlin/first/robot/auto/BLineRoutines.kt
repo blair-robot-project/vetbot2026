@@ -1,7 +1,10 @@
 package first.robot.auto
 import com.ctre.phoenix6.swerve.SwerveRequest
 import org.wpilib.math.controller.PIDController
-//import java.util.logging.Logger
+import bline.commands.FollowPath
+import bline.path.Path
+import org.littletonrobotics.junction.Logger
+import org.wpilib.math.kinematics.ChassisVelocities
 
 
 class BLineRoutines (
@@ -18,7 +21,7 @@ class BLineRoutines (
             //pass in drive subsystem
             //pass in pose supplier
             //pass in relative speeds supplier
-            {speeds: ChassisSpeeds ->
+            {speeds: ChassisVelocities ->
                 drive.setControl(applySpeedsRequest.withSpeeds(speeds))
             },
             translationController,
@@ -48,5 +51,7 @@ class BLineRoutines (
     init {
         logFollowPath()
     }
+
+    val path: Path = Path("new path")
 
 }
