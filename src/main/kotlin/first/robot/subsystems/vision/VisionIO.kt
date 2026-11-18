@@ -16,7 +16,7 @@ interface VisionIO {
 
         @JvmField var latestTargetObservation: TargetObservation = TargetObservation(Rotation2d.kZero, Rotation2d.kZero)
 
-        @JvmField var estimatedPose: Array<PoseObservation> = emptyArray()
+        @JvmField var poseObservations: Array<PoseObservation> = emptyArray()
     }
 
     fun updateInputs(inputs: VisionIOInputs) {}

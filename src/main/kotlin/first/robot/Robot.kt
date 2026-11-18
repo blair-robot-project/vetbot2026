@@ -1,6 +1,8 @@
 package first.robot
 
 import org.littletonrobotics.junction.LoggedRobot
+import org.littletonrobotics.junction.Logger
+import org.littletonrobotics.junction.networktables.NT4Publisher
 import org.wpilib.command3.Command
 import org.wpilib.command3.Scheduler
 import org.wpilib.driverstation.DriverStation
@@ -29,6 +31,8 @@ class Robot : LoggedRobot() {
         // Record DS control and joystick data.
         // Change to `false` to not record joystick data.
         DriverStation.startDataLog(DataLogManager.getLog(), true)
+        Logger.addDataReceiver(NT4Publisher())
+        Logger.start()
     }
 
     /**
@@ -44,6 +48,7 @@ class Robot : LoggedRobot() {
         // commands, running already-scheduled commands, removing finished or interrupted commands,
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
+        robotContainer.vision.periodic()
         Scheduler.getDefault().run()
     }
 
