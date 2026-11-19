@@ -27,4 +27,8 @@ object IntakeConstants {
 
     const val PIVOT_SENSOR_MECH_RATIO = 52.0 // needs to be checked
     const val ROLLER_SENSOR_MECH_RATIO = 4.0 / 3 // needs to be checked
+
+    //SIM STUFF
+
+
 }
