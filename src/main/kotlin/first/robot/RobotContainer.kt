@@ -2,6 +2,7 @@ package first.robot
 
 import first.robot.subsystems.elevator.ElevatorIOSim
 import first.robot.subsystems.elevator.ElevatorSubsystem
+import org.wpilib.command3.button.CommandNiDsXboxController
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -10,6 +11,10 @@ import first.robot.subsystems.elevator.ElevatorSubsystem
  * subsystems, commands, and button mappings) should be declared here.
  */
 class RobotContainer {
+    val driveController: CommandNiDsXboxController = CommandNiDsXboxController(0)
+
     // The container for the robot. Contains subsystems, OI devices, and commands.
     val elevator: ElevatorSubsystem = ElevatorSubsystem(ElevatorIOSim())
+
+    val bindings = Bindings(this)
 }

@@ -6,6 +6,8 @@ import org.littletonrobotics.junction.networktables.NT4Publisher
 import org.wpilib.command3.Command
 import org.wpilib.command3.Scheduler
 import org.wpilib.driverstation.DriverStation
+import org.wpilib.networktables.NetworkTableInstance
+import org.wpilib.networktables.ProtobufPublisher
 import org.wpilib.system.DataLogManager
 
 /**
@@ -20,8 +22,11 @@ class Robot : LoggedRobot() {
     // autonomous chooser on the dashboard.
     private val robotContainer: RobotContainer = RobotContainer()
 
-//      This function is run when the robot is first started up and should be used for any
-//      initialization code.
+    private val schedulerPub: ProtobufPublisher<Scheduler> =
+        NetworkTableInstance
+            .getDefault()
+            .getProtobufTopic("/Scheduler", Scheduler.proto)
+            .publish()
 
     init {
 
@@ -33,6 +38,7 @@ class Robot : LoggedRobot() {
         DriverStation.startDataLog(DataLogManager.getLog(), true)
         Logger.addDataReceiver(NT4Publisher())
         Logger.start()
+        robotContainer.bindings.bindControls()
     }
 
     /**
@@ -48,8 +54,10 @@ class Robot : LoggedRobot() {
         // commands, running already-scheduled commands, removing finished or interrupted commands,
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
-        Scheduler.getDefault().run()
         robotContainer.elevator.periodic()
+
+        Scheduler.getDefault().run()
+        schedulerPub.set(Scheduler.getDefault())
     }
 
     /** This function is called once each time the robot enters Disabled mode.  */
