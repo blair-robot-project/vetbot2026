@@ -161,6 +161,7 @@ open class IntakeIOHardware : IntakeIO {
 
     override fun setPivotAngle(angle: Angle) {
         rightPivot.setControl(pivotPositionRequest.withPosition(angle))
+        leftPivot.setControl(pivotPositionRequest.withPosition(angle))
     }
 
     override fun setRollerVoltage(volts: Double) {
