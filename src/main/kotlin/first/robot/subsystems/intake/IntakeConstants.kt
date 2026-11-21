@@ -28,13 +28,17 @@ object IntakeConstants {
     const val PIVOT_SENSOR_MECH_RATIO = 52.0 // needs to be checked
     const val ROLLER_SENSOR_MECH_RATIO = 4.0 / 3 // needs to be checked
 
-    //SIM STUFF
-    const val PIVOT_GEARING = 2.0 //needs to be checked
-    const val PIVOT_MOI_KG_MM = 0.005 //needs to be  checked
-    const val PIVOT_ARM_LENGTH = 2.0 //needs to be checked
-    const val PIVOT_MIN_RADS = 0.0 //needs to be checked
-    const val PIVOT_MAX_RADS = 1.0 //needs to be checked
+    // SIM STUFF
+    const val PIVOT_GEARING = 2.0 // needs to be checked
+    const val PIVOT_MOI_KG_MM = 0.005 // needs to be  checked
+    const val PIVOT_ARM_LENGTH = 2.0 // needs to be checked
+    const val PIVOT_MIN_RADS = 0.0 // needs to be checked
+    const val PIVOT_MAX_RADS = 1.0 // needs to be checked
 
-    const val ROLLER_MOI_KG_MM = 0.005 //needs to be checked
-    const val ROLLER_GEARING = 2.0 //needs to be checked
+    const val ROLLER_MOI_KG_MM = 0.005 // needs to be checked
+    const val ROLLER_GEARING = 2.0 // needs to be checked
+
+    // SUBSYSTEM STUFF
+    const val PIVOT_FEED_MANIP_ANGLE_RADS = 1.0 // needs to be checked
+    const val PIVOT_DOWN_RADS = 0.0 // needs to be checked
 }
