@@ -12,16 +12,16 @@ class ManipIOSim : ManipIOHardware() {
     private val rollSim =
         FlywheelSim(
             flywheelFromPhysicalConstants(
-                DCMotor.getKrakenX60(1),
+                DCMotor.getKrakenX44(1),
                 ManipConstants.ROLL_MOI_KG_MM,
                 ManipConstants.ROLL_GEARING,
             ),
-            DCMotor.getKrakenX60(1),
+            DCMotor.getKrakenX44(1),
         )
 
     private val turnSim =
         SingleJointedArmSim(
-            DCMotor.getKrakenX60(1),
+            DCMotor.getKrakenX44(1),
             ManipConstants.TURN_GEARING,
             ManipConstants.TURN_MOI_KG_MM,
             ManipConstants.ARM_LENGTH_METERS,
