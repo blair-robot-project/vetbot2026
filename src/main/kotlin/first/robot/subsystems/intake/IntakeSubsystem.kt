@@ -4,6 +4,7 @@ import org.littletonrobotics.junction.Logger
 import org.wpilib.command3.Mechanism
 import org.wpilib.units.Units
 import org.wpilib.units.measure.Angle
+import org.wpilib.command3.Command
 
 class IntakeSubsystem(
     private val io: IntakeIO,
@@ -52,6 +53,20 @@ class IntakeSubsystem(
     }
 
     // Pick up piece
+        // put the pivot down
+        // runRollers
+    fun pickUpPiece(): Command {
+        return run(
+
+        )
+    }
+
+
     // Feed to manip
+        // put the pivot up
+        // run rollers backwards
+
     // Outtake
+        // put the pivot down
+        // runRollersBackwards
 }
