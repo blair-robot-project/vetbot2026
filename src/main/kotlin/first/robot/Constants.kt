@@ -38,7 +38,7 @@ object Constants {
         const val TURN_KV = 0.12
 
         // --- PHYSICAL SPECS & GEARING (motor:mechanism, >1 is a reduction) ---
-        const val ROLL_GEARING = 1.0
+        const val ROLL_GEARING = 3.625
         const val ROLL_MOI_KG_MM = 0.001
 
         // --- TURN PIVOT (sim) ---
@@ -49,6 +49,6 @@ object Constants {
         const val TURN_KP_CONTROLLER = 0.0
         const val TURN_KI_CONTROLLER = 0.0
         const val TURN_KD_CONTROLLER = 0.0
-        const val TURN_GEARING = 0.1
+        const val TURN_GEARING = 30.8
     }
 }
