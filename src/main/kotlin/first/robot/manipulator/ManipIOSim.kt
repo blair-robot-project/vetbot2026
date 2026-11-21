@@ -33,7 +33,9 @@ class ManipIOSim : ManipIOHardware() {
 
     private val rollMotorSim = rollMotor.simState
     private val turnMotorSim = turnMotor.simState
-
+    init {
+        rollMotorSim.setRawRotorPosition(0.0);
+    }
     override fun updateInputs(inputs: ManipIO.ManipIOInputs) {
         super.updateInputs(inputs)
 
@@ -41,9 +43,10 @@ class ManipIOSim : ManipIOHardware() {
         rollMotorSim.setSupplyVoltage(12.0)
         rollSim.setInput(rollMotorSim.motorVoltage)
         rollSim.update(Constants.LOOP_TIME)
-        rollMotorSim.setRotorVelocity(
-            Units.radiansToRotations(rollSim.angularVelocity) * ManipConstants.ROLL_GEARING,
-        )
+        //roller shat spins/sec
+        val rollRotorRps = Units.radiansToRotations(rollSim.angularVelocity) * ManipConstants.ROLL_GEARING
+        rollMotorSim.setRotorVelocity(rollRotorRps)
+        rollMotorSim.addRotorPosition(rollRotorRps * Constants.LOOP_TIME)
 
         // turn pivot
         turnMotorSim.setSupplyVoltage(12.0)
