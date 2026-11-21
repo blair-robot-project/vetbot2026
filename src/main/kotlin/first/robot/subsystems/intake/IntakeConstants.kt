@@ -2,8 +2,6 @@ package first.robot.subsystems.intake
 
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
-import org.wpilib.units.Units
-import org.wpilib.units.measure.Angle
 
 object IntakeConstants {
     // IDS (they need to be checked)
@@ -41,6 +39,8 @@ object IntakeConstants {
     const val ROLLER_GEARING = 2.0 // needs to be checked
 
     // SUBSYSTEM STUFF
-    val PIVOT_FEED_MANIP_ANGLE_RADS: Angle = Units.Radians.of(2.394) // needs to be checked
-    val PIVOT_DOWN_RADS: Angle = Units.Radians.of(0.0) // needs to be checked
+    const val PIVOT_FEED_MANIP_ANGLE_RADS: Double = 2.394 // needs to be checked
+    const val PIVOT_DOWN_RADS: Double = 0.0 // needs to be checked
+    const val PIVOT_DEPOT_ANGLE_RADS: Double = 1.0 // needs to be checked
+    const val PIVOT_OVEN_ANGLE_RADS: Double = 0.5 // needs to be checked
 }
