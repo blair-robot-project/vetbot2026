@@ -15,7 +15,6 @@ open class ManipIOHardware : ManipIO {
     val rollMotor = TalonFX(ManipConstants.ROLL_ID, CANBus())
     val turnMotor = TalonFX(ManipConstants.TURN_ID, CANBus())
 
-    // separate request objects so the two motors never share mutable state
     private val rollVelocityRequest = VelocityVoltage(0.0)
     private val turnVelocityRequest = VelocityVoltage(0.0)
     private val rollVoltageRequest = VoltageOut(0.0)
@@ -56,7 +55,7 @@ open class ManipIOHardware : ManipIO {
         inputs.turnMotorVoltage = turnVoltage.value.`in`(Units.Volts)
     }
 
-    override fun setVoltage(volts: Double) {
+    override fun setRollVoltage(volts: Double) {
         rollMotor.setControl(rollVoltageRequest.withOutput(volts))
     }
 

@@ -21,7 +21,7 @@ interface ManipIO {
 
     fun updateInputs(inputs: ManipIOInputs) {}
 
-    fun setVoltage(voltage: Double) {}
+    fun setRollVoltage(voltage: Double) {}
 
     fun setTurnVoltage(voltage: Double) {}
 

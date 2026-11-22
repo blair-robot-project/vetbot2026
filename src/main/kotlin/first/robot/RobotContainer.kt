@@ -13,6 +13,6 @@ class RobotContainer {
     // The container for the robot. Contains subsystems, OI devices, and commands.
     val controller: CommandNiDsXboxController = CommandNiDsXboxController(0)
     val manipulator : ManipIOSubsystem = ManipIOSubsystem(ManipIOSim())
-    val bindings=Bindings()
+    val bindings=Bindings(this)
 
 }
