@@ -12,16 +12,16 @@ class ManipIOSim : ManipIOHardware() {
     private val rollSim =
         FlywheelSim(
             flywheelFromPhysicalConstants(
-                DCMotor.getKrakenX60(1),
+                DCMotor.getKrakenX44(1),
                 ManipConstants.ROLL_MOI_KG_MM,
                 ManipConstants.ROLL_GEARING,
             ),
-            DCMotor.getKrakenX60(1),
+            DCMotor.getKrakenX44(1),
         )
 
     private val turnSim =
         SingleJointedArmSim(
-            DCMotor.getKrakenX60(1),
+            DCMotor.getKrakenX44(1),
             ManipConstants.TURN_GEARING,
             ManipConstants.TURN_MOI_KG_MM,
             ManipConstants.ARM_LENGTH_METERS,
@@ -33,6 +33,11 @@ class ManipIOSim : ManipIOHardware() {
 
     private val rollMotorSim = rollMotor.simState
     private val turnMotorSim = turnMotor.simState
+    init{
+        turnMotorSim.setRawRotorPosition(
+            Units.radiansToRotations(ManipConstants.MIN_ANGLE_RADS)* ManipConstants.TURN_GEARING
+        )
+    }
 
     override fun updateInputs(inputs: ManipIO.ManipIOInputs) {
         super.updateInputs(inputs)
@@ -41,10 +46,10 @@ class ManipIOSim : ManipIOHardware() {
         rollMotorSim.setSupplyVoltage(12.0)
         rollSim.setInput(rollMotorSim.motorVoltage)
         rollSim.update(Constants.LOOP_TIME)
-        rollMotorSim.setRotorVelocity(
-            Units.radiansToRotations(rollSim.angularVelocity) * ManipConstants.ROLL_GEARING,
-        )
 
+        val rollRotorRps = Units.radiansToRotations(rollSim.angularVelocity)* ManipConstants.ROLL_GEARING
+        rollMotorSim.setRotorVelocity(rollRotorRps)
+        rollMotorSim.addRotorPosition(rollRotorRps*Constants.LOOP_TIME)
         // turn pivot
         turnMotorSim.setSupplyVoltage(12.0)
         turnSim.setInput(turnMotorSim.motorVoltage)

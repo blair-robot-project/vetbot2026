@@ -17,9 +17,13 @@ class ManipIOSubsystem(
             ManipConstants.TURN_KI_CONTROLLER,
             ManipConstants.TURN_KD_CONTROLLER,
         )
-
+    private var turnSetpointInitilized= false
     fun periodic() {
         io.updateInputs(inputs)
+        if (!turnSetpointInitilized){
+            turnController.setpoint=inputs.turnMotorAngle.radians
+            turnSetpointInitilized=true
+        }
         io.setTurnVoltage(turnController.calculate(inputs.turnMotorAngle.radians))
 
         Logger.processInputs("Manipulator", inputs)
@@ -32,12 +36,12 @@ class ManipIOSubsystem(
         } as Command
 
     fun grabPiece(radsPerSecond: Double): Command =
-        run {
+        runRepeatedly {
             io.setRollVelocity(radsPerSecond)
         } as Command
 
     fun ejectPiece(radsPerSecond: Double): Command =
-        run {
+        runRepeatedly {
             io.setRollVelocity(-radsPerSecond)
         } as Command
 
