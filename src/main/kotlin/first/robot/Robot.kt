@@ -1,9 +1,13 @@
 package first.robot
 
 import org.littletonrobotics.junction.LoggedRobot
+import org.littletonrobotics.junction.Logger
+import org.littletonrobotics.junction.networktables.NT4Publisher
 import org.wpilib.command3.Command
 import org.wpilib.command3.Scheduler
 import org.wpilib.driverstation.DriverStation
+import org.wpilib.networktables.NetworkTableInstance
+import org.wpilib.networktables.ProtobufPublisher
 import org.wpilib.system.DataLogManager
 
 /**
@@ -26,9 +30,14 @@ class Robot : LoggedRobot() {
         // Start recording to data log
         DataLogManager.start()
 
+
         // Record DS control and joystick data.
         // Change to `false` to not record joystick data.
         DriverStation.startDataLog(DataLogManager.getLog(), true)
+        Logger.addDataReceiver(NT4Publisher())
+        Logger.start()
+        robotContainer.bindings.bindControls()
+
     }
 
     /**
@@ -44,7 +53,9 @@ class Robot : LoggedRobot() {
         // commands, running already-scheduled commands, removing finished or interrupted commands,
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
+        robotContainer.manipulator.periodic()
         Scheduler.getDefault().run()
+
     }
 
     /** This function is called once each time the robot enters Disabled mode.  */

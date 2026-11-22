@@ -1,4 +1,7 @@
 package first.robot
+import first.robot.manipulator.ManipIOSim
+import first.robot.manipulator.ManipIOSubsystem
+import org.wpilib.command3.button.CommandNiDsXboxController
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -8,6 +11,7 @@ package first.robot
  */
 class RobotContainer {
     // The container for the robot. Contains subsystems, OI devices, and commands.
-    init {
-    }
+    val controller: CommandNiDsXboxController = CommandNiDsXboxController(0)
+    val manipulator : ManipIOSubsystem = ManipIOSubsystem(ManipIOSim())
+    val bindings=Bindings()
 }

@@ -31,28 +31,58 @@ class ManipIOSubsystem(
     }
 
     fun setMotorVoltage(voltage: Double): Command =
-        run {
-            io.setVoltage(voltage)
-        } as Command
+        Command
+            .requiring(
+                this,
+            ).executing { coroutine ->
+                while(true){
+                    io.setRollVelocity(voltage)
+                    coroutine.yield()
+                }
+            }.named("set roll voltage")
 
     fun grabPiece(radsPerSecond: Double): Command =
-        runRepeatedly {
-            io.setRollVelocity(radsPerSecond)
-        } as Command
+        Command
+            .requiring(
+                this,
+            ).executing { coroutine ->
+                val rollTargetVelocity = radsPerSecond
+                while(true){
+                    io.setRollVelocity(radsPerSecond)
+                    coroutine.yield()
+                }
+            }.named("grab piece")
 
     fun ejectPiece(radsPerSecond: Double): Command =
-        runRepeatedly {
-            io.setRollVelocity(-radsPerSecond)
-        } as Command
+        Command
+            .requiring(
+                this,
+            ).executing { coroutine ->
+                val rollTargetVelocity = -radsPerSecond
+                while(true){
+                    io.setRollVelocity(-radsPerSecond)
+                    coroutine.yield()
+                }
+            }.named("eject piece")
 
     fun setAngle(setpoint: Double): Command =
-        run {
-            turnController.setpoint = setpoint
-        } as Command
+        Command
+            .requiring(
+                this,
+            ).executing { coroutine ->
+                turnController.setpoint=
+                    setpoint.coerceIn(ManipConstants.MIN_ANGLE_RADS, ManipConstants.MAX_ANGLE_RADS)
+                coroutine.yield()
+            }.named("grab piece")
 
     fun stop(): Command =
-        run {
-            io.setVoltage(0.0)
-            turnController.setpoint = inputs.turnMotorAngle.radians
-        } as Command
+        Command
+            .requiring(
+                this,
+            ).executing { coroutine ->
+                val rollTargetVelocity= 0.0
+                io.setVoltage(0.0)
+                turnController.setpoint=inputs.turnMotorAngle.radians
+                coroutine.yield()
+            }.named("stop manip")
 }
