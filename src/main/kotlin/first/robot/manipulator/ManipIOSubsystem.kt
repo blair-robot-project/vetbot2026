@@ -77,6 +77,7 @@ class ManipIOSubsystem(
 
     fun stop(): Command =
         Command
+
             .requiring(
                 this,
             ).executing { coroutine ->
