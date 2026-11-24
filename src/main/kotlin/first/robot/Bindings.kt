@@ -15,7 +15,7 @@ class Bindings(
         driver.b().whileTrue(manip.ejectPiece(ManipConstants.ROLL_SPEED))
         driver.b().onFalse((manip.stopRoller()))
 
-        driver.x().onTrue(manip.setAngle(ManipConstants.MIN_ANGLE_RADS))
+        driver.x().onTrue(manip.setAngle(ManipConstants.MAX_ANGLE_RADS))
 
     }
 
