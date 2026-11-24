@@ -1,5 +1,6 @@
 package first.robot.mechanism.elevator
 
+import com.ctre.phoenix6.sim.TalonFXSimState
 import first.robot.Constants
 import first.robot.Constants.ElevatorConstants
 import org.wpilib.math.system.DCMotor
@@ -9,7 +10,7 @@ class ElevatorIOSim : ElevatorIOHardware() {
     private val elevatorSim: ElevatorSim =
         ElevatorSim(
             DCMotor.getKrakenX60(2),
-            1 / ElevatorConstants.GEAR_RATIO,
+            ElevatorConstants.GEAR_RATIO,
             ElevatorConstants.CARRIAGE_MASS,
             ElevatorConstants.DRUM_RADIUS,
             ElevatorConstants.MIN_ELEVATOR_HEIGHT,
@@ -18,8 +19,8 @@ class ElevatorIOSim : ElevatorIOHardware() {
             ElevatorConstants.MIN_ELEVATOR_HEIGHT,
         )
 
-    val leftMotorSim = leftMotor.simState
-    val rightMotorSim = rightMotor.simState
+    val leftMotorSim: TalonFXSimState = leftMotor.simState
+    val rightMotorSim: TalonFXSimState = rightMotor.simState
 
     override fun updateInputs(input: ElevatorIO.ElevatorIOInputs) {
         super.updateInputs(input)
@@ -27,13 +28,16 @@ class ElevatorIOSim : ElevatorIOHardware() {
         leftMotorSim.setSupplyVoltage(12.0)
         rightMotorSim.setSupplyVoltage(12.0)
 
+        elevatorSim.setInputVoltage(leftMotorSim.motorVoltage)
         elevatorSim.update(Constants.LOOP_TIME)
 
-        val elevatorMotorPosition = elevatorSim.position * ElevatorConstants.DRUM_RADIUS * 2 * Math.PI
+        val elevatorMotorPosition =
+            (elevatorSim.position / (2.0 * Math.PI * ElevatorConstants.DRUM_RADIUS)) * ElevatorConstants.GEAR_RATIO
         leftMotorSim.setRawRotorPosition(elevatorMotorPosition)
         rightMotorSim.setRawRotorPosition(elevatorMotorPosition)
 
-        val elevatorMotorVelocity = elevatorSim.velocity * ElevatorConstants.DRUM_RADIUS * 2 * Math.PI
+        val elevatorMotorVelocity =
+            (elevatorSim.velocity / (2.0 * Math.PI * ElevatorConstants.DRUM_RADIUS)) * ElevatorConstants.GEAR_RATIO
         leftMotorSim.setRotorVelocity(elevatorMotorVelocity)
         rightMotorSim.setRotorVelocity(elevatorMotorVelocity)
     }

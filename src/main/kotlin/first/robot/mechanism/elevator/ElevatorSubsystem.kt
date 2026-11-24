@@ -21,8 +21,14 @@ class ElevatorSubsystem(
     }
 
     fun moveElevator(m: Double): Command =
-        run {
-            elevatorTargetPosition = m
-            io.setPosition(m)
-        }.named("Move Elevator")
+        Command
+            .requiring(
+                this,
+            ).executing { coroutine ->
+                elevatorTargetPosition = m
+                while (true) {
+                    io.setPosition(m)
+                    coroutine.yield()
+                }
+            }.named("move elevator")
 }

@@ -27,8 +27,6 @@ open class ElevatorIOHardware : ElevatorIO {
     private val rightStatorCurrent = rightMotor.statorCurrent
     private val rightTemp = rightMotor.deviceTemp
 
-    private var elevatorPos = 0.0
-
     private val isLeftConnected: Boolean =
         BaseStatusSignal.isAllGood(
             leftVoltage,
@@ -57,8 +55,8 @@ open class ElevatorIOHardware : ElevatorIO {
         )
 
     init {
-        leftMotor.configurator.apply(leftMotorConfig)
-        rightMotor.configurator.apply(rightMotorConfig)
+        leftMotor.configurator.apply(leftMotorConfig, 0.25)
+        rightMotor.configurator.apply(rightMotorConfig, 0.25)
     }
 
     override fun updateInputs(input: ElevatorIO.ElevatorIOInputs) {
@@ -77,13 +75,11 @@ open class ElevatorIOHardware : ElevatorIO {
         input.rightStatorCurrentAmps = rightStatorCurrent.value.`in`(Units.Amps)
         input.rightTempCelsius = rightTemp.value.`in`(Units.Celsius)
 
-        input.elevatorPosMeters = elevatorPos
+        input.elevatorPosMeters = leftMotor.position.valueAsDouble
     }
 
     override fun setPosition(posMeters: Double) {
-        elevatorPos = posMeters
-        val motorRadians: Double = posMeters * ElevatorConstants.DRUM_RADIUS * 2 * Math.PI
-        positionRequest.withPosition(motorRadians)
+        positionRequest.withPosition(posMeters)
         leftMotor.setControl(positionRequest)
         rightMotor.setControl(positionRequest)
     }
@@ -94,6 +90,8 @@ open class ElevatorIOHardware : ElevatorIO {
                 kP = ElevatorConstants.KP
                 kI = ElevatorConstants.KI
                 kD = ElevatorConstants.KD
+                kA = ElevatorConstants.KA
+                kV = ElevatorConstants.KV
                 kG = ElevatorConstants.KG
             }
         val leftMotorConfig =
@@ -106,6 +104,9 @@ open class ElevatorIOHardware : ElevatorIO {
                     Inverted = ElevatorConstants.LEFT_INVERSION
                     NeutralMode = ElevatorConstants.TALON_NEUTRAL_MODE
                 }
+                Feedback.apply {
+                    SensorToMechanismRatio = ElevatorConstants.GEAR_RATIO / (ElevatorConstants.DRUM_RADIUS * 2.0 * Math.PI)
+                }
                 Slot0 = talonSlot0Configs
             }
         val rightMotorConfig =
@@ -117,6 +118,9 @@ open class ElevatorIOHardware : ElevatorIO {
                 MotorOutput.apply {
                     Inverted = ElevatorConstants.RIGHT_INVERSION
                     NeutralMode = ElevatorConstants.TALON_NEUTRAL_MODE
+                }
+                Feedback.apply {
+                    SensorToMechanismRatio = ElevatorConstants.GEAR_RATIO / (ElevatorConstants.DRUM_RADIUS * 2.0 * Math.PI)
                 }
                 Slot0 = talonSlot0Configs
             }

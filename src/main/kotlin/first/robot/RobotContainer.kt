@@ -1,5 +1,6 @@
 package first.robot
 
+import org.wpilib.command3.button.CommandNiDsXboxController
 import first.robot.mechanism.elevator.ElevatorIOSim
 import first.robot.mechanism.elevator.ElevatorSubsystem
 
@@ -10,6 +11,10 @@ import first.robot.mechanism.elevator.ElevatorSubsystem
  * subsystems, commands, and button mappings) should be declared here.
  */
 class RobotContainer {
+    val driveController: CommandNiDsXboxController = CommandNiDsXboxController(0)
+
     // The container for the robot. Contains subsystems, OI devices, and commands.
     val elevator: ElevatorSubsystem = ElevatorSubsystem(ElevatorIOSim())
+
+    val bindings = Bindings()
 }
