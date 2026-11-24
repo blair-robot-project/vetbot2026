@@ -2,11 +2,13 @@ package first.robot
 
 import org.littletonrobotics.junction.LoggedRobot
 import org.littletonrobotics.junction.Logger
+import org.littletonrobotics.junction.networktables.LoggedNetworkString
 import org.littletonrobotics.junction.networktables.NT4Publisher
 import org.wpilib.command3.Command
 import org.wpilib.command3.Scheduler
 import org.wpilib.driverstation.DriverStation
 import org.wpilib.system.DataLogManager
+import org.wpilib.system.RobotController
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -19,6 +21,7 @@ class Robot : LoggedRobot() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     private val robotContainer: RobotContainer = RobotContainer()
+    private val batteryInfo = LoggedNetworkString("Battery Name", "ENTER BATTERY NAME")
 
 //      This function is run when the robot is first started up and should be used for any
 //      initialization code.
@@ -50,6 +53,7 @@ class Robot : LoggedRobot() {
         // block in order for anything in the Command-based framework to work.
         Scheduler.getDefault().run()
         robotContainer.elevator.periodic()
+        logBattery()
     }
 
     /** This function is called once each time the robot enters Disabled mode.  */
@@ -88,4 +92,9 @@ class Robot : LoggedRobot() {
 
     /** This function is called periodically during utility mode.  */
     override fun utilityPeriodic() {}
+
+    fun logBattery() {
+        Logger.recordOutput("Battery/Battery Voltage", RobotController.getBatteryVoltage())
+        Logger.recordOutput("Battery/Name", batteryInfo.get())
+    }
 }
