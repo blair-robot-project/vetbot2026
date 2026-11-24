@@ -50,5 +50,8 @@ object Constants {
         const val TURN_KI_CONTROLLER = 0.0
         const val TURN_KD_CONTROLLER = 0.0
         const val TURN_GEARING = 30.80
+
+
+        const val ROLL_SPEED = 100.0
     }
 }

@@ -46,7 +46,6 @@ class ManipIOSubsystem(
             .requiring(
                 this,
             ).executing { coroutine ->
-                val rollTargetVelocity = radsPerSecond
                 while(true){
                     io.setRollVelocity(radsPerSecond)
                     coroutine.yield()
@@ -58,7 +57,6 @@ class ManipIOSubsystem(
             .requiring(
                 this,
             ).executing { coroutine ->
-                val rollTargetVelocity = -radsPerSecond
                 while(true){
                     io.setRollVelocity(-radsPerSecond)
                     coroutine.yield()
@@ -75,16 +73,14 @@ class ManipIOSubsystem(
                 coroutine.yield()
             }.named("grab piece")
 
-    fun stop(): Command =
+    //does NOT freeze pivot
+    fun stopRoller(): Command =
         Command
-
             .requiring(
                 this,
             ).executing { coroutine ->
-                val rollTargetVelocity= 0.0
                 io.setRollVoltage(0.0)
-                turnController.setpoint=inputs.turnMotorAngle.radians
                 coroutine.yield()
-            }.named("stop manip")
+            }.named("stop roller")
 
 }
