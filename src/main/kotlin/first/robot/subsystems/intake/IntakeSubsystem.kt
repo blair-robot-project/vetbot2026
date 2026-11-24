@@ -1,15 +1,15 @@
 package first.robot.subsystems.intake
 
 import org.littletonrobotics.junction.Logger
-import org.wpilib.command3.Command
-import org.wpilib.command3.Mechanism
+import edu.wpi.first.wpilibj2.command.Command
+import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.wpilib.units.Units
 import org.wpilib.units.measure.Angle
 import first.robot.Constants.IntakeConstants
 
 class IntakeSubsystem(
     private val io: IntakeIO,
-) : Mechanism() {
+) : SubsystemBase() {
     private val inputs: IntakeInputsAutoLogged = IntakeInputsAutoLogged()
 
     var pivotTargetRads: Angle = Units.Radians.of(0.0)
@@ -18,7 +18,7 @@ class IntakeSubsystem(
     var rollerTargetVolts: Double = 0.0
     var rollerVolts: Double = 0.0
 
-    fun periodic() {
+    override fun periodic() {
         io.updateInputs(inputs)
         Logger.processInputs("Intake", inputs)
         Logger.recordOutput("Intake pivot target pos rads", pivotTargetRads)

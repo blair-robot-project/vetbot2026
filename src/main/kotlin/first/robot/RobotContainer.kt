@@ -3,6 +3,7 @@ package first.robot
 import first.robot.subsystems.intake.IntakeIOSim
 import first.robot.subsystems.intake.IntakeSubsystem
 import org.wpilib.command3.button.CommandNiDsPS4Controller
+import org.wpilib.command3.button.CommandNiDsXboxController
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -14,7 +15,7 @@ class RobotContainer {
     // The container for the robot. Contains subsystems, OI devices, and commands.
     init {
     }
-    val driveController: CommandNiDsPS4Controller = CommandNiDsPS4Controller(0)
+    val driveController: CommandNiDsXboxController = CommandNiDsXboxController(0)
 
     val intake: IntakeSubsystem = IntakeSubsystem(IntakeIOSim())
 
