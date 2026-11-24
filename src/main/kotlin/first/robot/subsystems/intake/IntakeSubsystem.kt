@@ -5,6 +5,7 @@ import org.wpilib.command3.Command
 import org.wpilib.command3.Mechanism
 import org.wpilib.units.Units
 import org.wpilib.units.measure.Angle
+import first.robot.Constants.IntakeConstants
 
 class IntakeSubsystem(
     private val io: IntakeIO,
@@ -37,17 +38,6 @@ class IntakeSubsystem(
                 }
             }.named("Set pivot angle")
 
-    fun putUpPivot(): Command =
-        Command
-            .requiring(
-                this,
-            ).executing { coroutine ->
-                while (true) {
-                    setPivot(IntakeConstants.PIVOT_FEED_MANIP_ANGLE_RADS)
-                    coroutine.yield()
-                }
-            }.named("put up pivot")
-
     // Run rollers
     fun runRollers(volts: Double): Command =
         Command
@@ -60,19 +50,6 @@ class IntakeSubsystem(
                     coroutine.yield()
                 }
             }.named("run rollers")
-
-    // Stop rollers
-    fun stopRollers(): Command =
-        Command
-            .requiring(
-                this,
-            ).executing { coroutine ->
-                rollerTargetVolts = 0.0
-                while (true) {
-                    runRollers(0.0)
-                    coroutine.yield()
-                }
-            }.named("stop rollers")
 
     // Pick up piece: put the pivot down, runRollers
     fun pickUpPiece(): Command =
@@ -96,7 +73,7 @@ class IntakeSubsystem(
                 this,
             ).executing { coroutine ->
                 while (true) {
-                    putUpPivot()
+                    setPivot(IntakeConstants.PIVOT_FEED_MANIP_ANGLE_RADS)
                     coroutine.await(runRollers(-5.0))
                     coroutine.yield()
                 }

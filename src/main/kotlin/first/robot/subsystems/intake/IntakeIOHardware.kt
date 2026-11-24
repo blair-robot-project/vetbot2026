@@ -7,7 +7,8 @@ import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.controls.VoltageOut
 import com.ctre.phoenix6.hardware.ParentDevice
 import com.ctre.phoenix6.hardware.TalonFX
-import first.robot.subsystems.intake.PhoenixUtil.tryUntilOk
+import first.robot.Constants.IntakeConstants
+import first.robot.util.PhoenixUtil.tryUntilOk
 import org.wpilib.units.Units
 import org.wpilib.units.measure.Angle
 

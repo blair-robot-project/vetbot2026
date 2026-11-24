@@ -1,10 +1,12 @@
 package first.robot.subsystems.intake
 
+import first.robot.Constants
 import org.wpilib.math.system.DCMotor
 import org.wpilib.math.system.Models.flywheelFromPhysicalConstants
 import org.wpilib.math.util.Units
 import org.wpilib.simulation.FlywheelSim
 import org.wpilib.simulation.SingleJointedArmSim
+import first.robot.Constants.IntakeConstants
 
 class IntakeIOSim : IntakeIOHardware() {
     var pivotSim =
@@ -37,9 +39,9 @@ class IntakeIOSim : IntakeIOHardware() {
     override fun updateInputs(inputs: IntakeIO.IntakeInputs) {
         super.updateInputs(inputs)
 
-        rightPivotSim.setSupplyVoltage(5.0)
-        leftPivotSim.setSupplyVoltage(5.0)
-        pivotSim.update(0.05) // needs to get put in constants
+        rightPivotSim.setSupplyVoltage(12.0)
+        leftPivotSim.setSupplyVoltage(12.0)
+        pivotSim.update(Constants.LOOP_TIME)
         rightPivotSim.setRotorVelocity(
             Units.radiansToRotations(pivotSim.velocity) *
                 IntakeConstants.PIVOT_SENSOR_MECH_RATIO,
@@ -57,9 +59,9 @@ class IntakeIOSim : IntakeIOHardware() {
                 IntakeConstants.PIVOT_SENSOR_MECH_RATIO,
         )
 
-        topRollerSim.setSupplyVoltage(6.0)
-        bottomRollerSim.setSupplyVoltage(6.0)
-        rollerSim.update(0.05) // needs to get put in constants
+        topRollerSim.setSupplyVoltage(12.0)
+        bottomRollerSim.setSupplyVoltage(12.0)
+        rollerSim.update(Constants.LOOP_TIME)
         topRollerSim.setRotorVelocity(
             Units.radiansToRotations(rollerSim.angularVelocity) *
                 IntakeConstants.ROLLER_SENSOR_MECH_RATIO,

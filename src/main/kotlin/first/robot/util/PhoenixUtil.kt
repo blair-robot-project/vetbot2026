@@ -1,4 +1,4 @@
-package first.robot.subsystems.intake
+package first.robot.util
 
 import com.ctre.phoenix6.StatusCode
 import java.util.function.Supplier
