@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "project_id": "workspace-98fcca46-0be5-4a4c-905d-a19602ad23f6",
+  "display_name": "autos",
+  "editor_config": {
+    "gui": {
+      "robot": {
+        "length_meters": 0.8,
+        "width_meters": 0.8
+      },
+      "protrusions": {
+        "enabled": false,
+        "distance_meters": 0,
+        "side": "none",
+        "default_state": "",
+        "show_on_event_keys": [],
+        "hide_on_event_keys": []
+      }
+    },
+    "kinematic_constraints": {
+      "default_auto_velocity_velocity_safety_factor": 1,
+      "default_auto_velocity_acceleration_safety_factor": 1,
+      "default_auto_velocity_merge_tolerance_meters_per_sec": 0.3
+    }
+  },
+  "paths": [
+    {
+      "path_id": "margaret.json",
+      "display_name": "margaret",
+      "file_name": "margaret.json",
+      "editor_metadata": {
+        "preview": {
+          "start_pose": {
+            "x_meters": 8.27,
+            "y_meters": 4.035,
+            "rotation_radians": 0
+          }
+        },
+        "ranged_constraints": [
+          {
+            "key": "max_velocity_meters_per_sec",
+            "value": 4.7,
+            "start_ordinal": 1,
+            "end_ordinal": 1,
+            "source": "auto_velocity"
+          }
+        ]
+      }
+    }
+  ],
+  "path_groups": [],
+  "linked_targets": []
+}
