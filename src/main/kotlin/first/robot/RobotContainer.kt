@@ -1,16 +1,15 @@
 package first.robot
 
-import org.wpilib.command3.button.CommandNiDsXboxController
-import first.robot.mechanism.elevator.ElevatorIOSim
-import first.robot.mechanism.elevator.ElevatorSubsystem
-
 import first.robot.Constants.Mode
 import first.robot.Constants.VisionConstants
-import first.robot.subsystems.drive.DriveSubsystem
-import first.robot.subsystems.vision.VisionIO
-import first.robot.subsystems.vision.VisionIOPhoton
-import first.robot.subsystems.vision.VisionIOPhotonSim
-import first.robot.subsystems.vision.VisionSubsystem
+import first.robot.mechanism.drive.DriveSubsystem
+import first.robot.mechanism.elevator.ElevatorIOSim
+import first.robot.mechanism.elevator.ElevatorSubsystem
+import first.robot.mechanism.vision.VisionIO
+import first.robot.mechanism.vision.VisionIOPhoton
+import first.robot.mechanism.vision.VisionIOPhotonSim
+import first.robot.mechanism.vision.VisionSubsystem
+import org.wpilib.command3.button.CommandNiDsXboxController
 import org.wpilib.math.geometry.Pose3d
 
 /**

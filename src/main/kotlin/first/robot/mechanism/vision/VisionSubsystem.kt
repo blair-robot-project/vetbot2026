@@ -1,4 +1,4 @@
-package first.robot.subsystems.vision
+package first.robot.mechanism.vision
 
 import first.robot.Constants
 import first.robot.Constants.VisionConstants
@@ -14,7 +14,6 @@ import org.wpilib.math.numbers.N3
 import java.util.function.Supplier
 import kotlin.math.abs
 import kotlin.math.pow
-import kotlin.text.compareTo
 
 class VisionSubsystem(
     private val consumeVisionMeasurement: (

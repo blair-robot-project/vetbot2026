@@ -1,4 +1,4 @@
-package first.robot.subsystems.vision
+package first.robot.mechanism.vision
 
 import first.robot.Constants
 import org.photonvision.simulation.PhotonCameraSim
@@ -14,9 +14,9 @@ class VisionIOPhotonSim(
     cameraPosition: Pose3d,
     private val poseSupplier: Supplier<Pose2d>,
 ) : VisionIOPhoton(
-    name,
-    cameraPosition.minus(Pose3d.kZero),
-) {
+        name,
+        cameraPosition.minus(Pose3d.kZero),
+    ) {
     private val cameraSim: PhotonCameraSim
     private val visionSim: VisionSystemSim = VisionSystemSim("main")
 
