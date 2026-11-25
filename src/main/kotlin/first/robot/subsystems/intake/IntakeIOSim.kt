@@ -1,12 +1,12 @@
 package first.robot.subsystems.intake
 
 import first.robot.Constants
+import first.robot.Constants.IntakeConstants
 import org.wpilib.math.system.DCMotor
 import org.wpilib.math.system.Models.flywheelFromPhysicalConstants
 import org.wpilib.math.util.Units
 import org.wpilib.simulation.FlywheelSim
 import org.wpilib.simulation.SingleJointedArmSim
-import first.robot.Constants.IntakeConstants
 
 class IntakeIOSim : IntakeIOHardware() {
     var pivotSim =

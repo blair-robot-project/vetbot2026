@@ -1,15 +1,15 @@
 package first.robot.subsystems.intake
 
+import first.robot.Constants.IntakeConstants
 import org.littletonrobotics.junction.Logger
-import edu.wpi.first.wpilibj2.command.Command
-import edu.wpi.first.wpilibj2.command.SubsystemBase
+import org.wpilib.command3.Command
+import org.wpilib.command3.Mechanism
 import org.wpilib.units.Units
 import org.wpilib.units.measure.Angle
-import first.robot.Constants.IntakeConstants
 
 class IntakeSubsystem(
     private val io: IntakeIO,
-) : SubsystemBase() {
+) : Mechanism() {
     private val inputs: IntakeInputsAutoLogged = IntakeInputsAutoLogged()
 
     var pivotTargetRads: Angle = Units.Radians.of(0.0)
@@ -18,7 +18,7 @@ class IntakeSubsystem(
     var rollerTargetVolts: Double = 0.0
     var rollerVolts: Double = 0.0
 
-    override fun periodic() {
+    fun periodic() {
         io.updateInputs(inputs)
         Logger.processInputs("Intake", inputs)
         Logger.recordOutput("Intake pivot target pos rads", pivotTargetRads)
@@ -114,4 +114,15 @@ class IntakeSubsystem(
                     coroutine.yield()
                 }
             }.named("outtake in oven")
+
+    fun resetToNormalAndStop(): Command =
+        Command
+            .requiring(this)
+            .executing { coroutine ->
+                while (true) {
+                    setPivot(IntakeConstants.PIVOT_DOWN_RADS)
+                    coroutine.await(runRollers(0.0))
+                    coroutine.yield()
+                }
+            }.named("reset to normal and stop")
 }

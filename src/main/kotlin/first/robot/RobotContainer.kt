@@ -2,7 +2,6 @@ package first.robot
 
 import first.robot.subsystems.intake.IntakeIOSim
 import first.robot.subsystems.intake.IntakeSubsystem
-import org.wpilib.command3.button.CommandNiDsPS4Controller
 import org.wpilib.command3.button.CommandNiDsXboxController
 
 /**
@@ -15,6 +14,7 @@ class RobotContainer {
     // The container for the robot. Contains subsystems, OI devices, and commands.
     init {
     }
+
     val driveController: CommandNiDsXboxController = CommandNiDsXboxController(0)
 
     val intake: IntakeSubsystem = IntakeSubsystem(IntakeIOSim())
