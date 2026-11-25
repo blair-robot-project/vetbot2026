@@ -56,6 +56,7 @@ class Robot : LoggedRobot() {
         // block in order for anything in the Command-based framework to work.
         robotContainer.elevator.periodic()
 
+        robotContainer.vision.periodic()
         Scheduler.getDefault().run()
         schedulerPub.set(Scheduler.getDefault())
     }

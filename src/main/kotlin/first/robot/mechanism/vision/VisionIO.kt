@@ -16,7 +16,7 @@ interface VisionIO {
 
         @JvmField var latestTargetObservation: TargetObservation = TargetObservation(Rotation2d.kZero, Rotation2d.kZero)
 
-        @JvmField var estimatedPose: Array<PoseObservation> = emptyArray()
+        @JvmField var poseObservations: Array<PoseObservation> = emptyArray()
     }
 
     fun updateInputs(inputs: VisionIOInputs) {}
@@ -74,10 +74,10 @@ data class PoseObservation(
 
                 override fun getTypeName(): String = "PoseObservation"
 
-                override fun getSize(): Int = Double.SIZE_BITS + Pose3d.struct.size
+                override fun getSize(): Int = Double.SIZE_BITS * 3 + Integer.SIZE + Pose3d.struct.size + PoseObservationType.entries.size
 
                 override fun getSchema(): String =
-                    "Pose3d estimatedPose;double timeStamp; double ambiguity;int targetCount;double averageTagDistance;PoseObservationType poseObservationType"
+                    "Pose3d estimatedPose;double timeStamp; double ambiguity;int32 targetCount;double averageTagDistance;int32 poseObservationType"
 
                 override fun pack(
                     byte: ByteBuffer,
