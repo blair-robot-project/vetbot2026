@@ -4,7 +4,11 @@ import org.littletonrobotics.junction.LoggedRobot
 import org.wpilib.command3.Command
 import org.wpilib.command3.Scheduler
 import org.wpilib.driverstation.DriverStation
+import org.wpilib.networktables.NetworkTableInstance
+import org.wpilib.networktables.ProtobufPublisher
 import org.wpilib.system.DataLogManager
+import org.littletonrobotics.junction.Logger
+import org.littletonrobotics.junction.networktables.NT4Publisher
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -20,7 +24,8 @@ class Robot : LoggedRobot() {
 
 //      This function is run when the robot is first started up and should be used for any
 //      initialization code.
-
+    private val schedulerPub: ProtobufPublisher<Scheduler> =
+        NetworkTableInstance.getDefault().getProtobufTopic("/Scheduler", Scheduler.proto).publish()
     init {
 
         // Start recording to data log
@@ -29,6 +34,9 @@ class Robot : LoggedRobot() {
         // Record DS control and joystick data.
         // Change to `false` to not record joystick data.
         DriverStation.startDataLog(DataLogManager.getLog(), true)
+        Logger.addDataReceiver(NT4Publisher())
+        Logger.start()
+        robotContainer.bindings.bindControls()
     }
 
     /**
@@ -45,6 +53,8 @@ class Robot : LoggedRobot() {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         Scheduler.getDefault().run()
+        robotContainer.intake.periodic()
+        schedulerPub.set(Scheduler.getDefault())
     }
 
     /** This function is called once each time the robot enters Disabled mode.  */

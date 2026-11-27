@@ -7,14 +7,14 @@ class Bindings(
 
     fun bindControls() {
         driver
-            .rightBumper()
+            .x()
             .onTrue(
                 robotContainer.intake.pickUpPiece(),
             ).onFalse(
                 robotContainer.intake.runRollers(0.0),
             )
         driver
-            .leftBumper()
+            .y()
             .onTrue(
                 robotContainer.intake.feedToManip(),
             ).onFalse(
@@ -22,7 +22,7 @@ class Bindings(
             )
 
         driver
-            .rightTrigger()
+            .a()
             .onTrue(
                 robotContainer.intake.downAndOuttake(),
             ).onFalse(
@@ -30,7 +30,7 @@ class Bindings(
             )
 
         driver
-            .leftTrigger()
+            .b()
             .onTrue(
                 robotContainer.intake.outtakeInOven(),
             ).onFalse(
